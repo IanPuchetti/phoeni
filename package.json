@@ -2,7 +2,7 @@
   "name": "phoenix",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "app.js",
   "dependencies": {
     "angular-file-upload": "^2.5.0",
     "body-parser": "^1.17.1",
@@ -14,7 +14,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "author": "phoenix-log",
   "license": "ISC"
