@@ -28,7 +28,7 @@ app.post('/find', function (req, res) {
   res.send(mongo.find({usuario:req.body.usuario}, 'usuarios'));
 });
 
-var server = app.listen(3000, function(){
+var server = app.listen(process.env.PORT || 3000, function(){
   console.log('Server listening on port 3000');
 });
 
