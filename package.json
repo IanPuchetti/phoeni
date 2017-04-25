@@ -1,0 +1,21 @@
+{
+  "name": "phoenix",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "angular-file-upload": "^2.5.0",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "express-session": "^1.15.2",
+    "mongodb": "^2.2.25",
+    "cors": "^2.8.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "phoenix-log",
+  "license": "ISC"
+}
