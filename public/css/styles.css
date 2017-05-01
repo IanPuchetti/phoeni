@@ -13,11 +13,22 @@
     src: url('../fonts/Oswald-Light.ttf');
 }
 
+@font-face {
+    font-family: Benton-Sans;
+    src: url('../fonts/Benton-Sans-Regular.ttf');
+}
+
+@font-face {
+    font-family: Benton-Sans-Light;
+    src: url('../fonts/Benton-Sans-Light.ttf');
+}
+
 .titulo{
 	font-family:Oswald-Bold;
 	color:red;
 	padding:15px;
 	margin-top:-15px;
+	font-size:30px;
 }
 
 .input{
@@ -46,14 +57,54 @@ button.input:hover{
     outline: none;
 }
 
-.login{
-	position:fixed;
-	padding:25px;
-	height:100%;
-	background:rgba(0,0,0,0.8);
+.login{font-family: Benton-Sans;
+	margin:50px;padding:50px 25px 25px 25px;background:white;max-width:400px;border-radius:15px;
+	-webkit-box-shadow: 0px 0px 69px -1px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 69px -1px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 69px -1px rgba(0,0,0,0.75);
 }
 
-@media only screen and (min-width: 700px) {
+@media only screen and (min-width: 1023px) {
+	body{
+		background-size:cover;
+	}
 }
-@media only screen and (max-width: 701px) {
+@media only screen and (max-width: 1024px) {
+body{
+		background-size:none;
+	}
+	}
+
+.input-group-addon{
+	background:none;
+}
+
+.boton,.form-control{
+	font-family: Benton-Sans;
+}
+
+.boton:hover{
+	border-color:rgba(255,0,0,.3);
+}
+
+.gradiente{
+	background: -webkit-linear-gradient(#e11c1c, #d9aa21);
+  	-webkit-background-clip: text;
+  	-webkit-text-fill-color: transparent;
+}
+
+.olvido{
+	color:#777;
+	border-top:1px solid #eee;
+	padding-top:10px;
+	margin-top:20px;
+	font-family:Benton-Sans-Light;
+	text-align:center;
+	cursor:pointer;
+}
+
+.olvido:hover{
+		background: -webkit-linear-gradient(#e11c1c, #d9aa21);
+  	-webkit-background-clip: text;
+  	-webkit-text-fill-color: transparent;
 }
