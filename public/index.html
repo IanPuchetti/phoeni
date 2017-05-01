@@ -2,16 +2,22 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<title>Phoenix-Log</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css"/>
 		<link rel="stylesheet" href="css/styles.css"/>
 	</head>
 	<body ng-app="phoenix-app">
-		<div ng-controller="controller" style="text-align:center;margin-top:15px">
-			<img src="img/logo.png">
-			<div style="width:300px;margin:auto;margin-top:50px;">
-			<input type="text" class="form-control" style="width:300px;border-radius:0px;" placeholder="Usuario...">
-			<input type="password" class="form-control" style="width:300px;border-radius:0px;" placeholder="Contraseña...">
-			<button class="btn btn-default form-control" style="width:300px;">Entrar</button>
+		<div ng-controller="controller" style="text-align:left;margin-top:15px;">
+			<div style="border-bottom:1px solid #eee;background:white;">
+			<h1 class="titulo">
+				<img src="img/logo.png" style="margin-right:25px;">PHOENIX-LOG
+			</h1>
+			</div>
+			<div class="login">
+				<input type="text" class="input" placeholder="Usuario...">
+				<input type="password" class="input" placeholder="Contraseña...">
+				<button class="input">Entrar</button>
+			</div>
 		</div>
 		</div>
 	</body>

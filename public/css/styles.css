@@ -1,3 +1,59 @@
-.btn{
-	border-radius:0px;
+@font-face {
+    font-family: Oswald-Bold;
+    src: url('../fonts/Oswald-Bold.ttf');
+}
+
+@font-face {
+    font-family: Oswald;
+    src: url('../fonts/Oswald-Regular.ttf');
+}
+
+@font-face {
+    font-family: Oswald-Light;
+    src: url('../fonts/Oswald-Light.ttf');
+}
+
+.titulo{
+	font-family:Oswald-Bold;
+	color:red;
+	padding:15px;
+	margin-top:-15px;
+}
+
+.input{
+	border:1px solid rgba(255,255,255,0.2);
+	background:rgba(0,0,0,0.1);
+	color:#fff;
+	font-size:17px;
+	font-weight:100;
+	padding:5px;
+}
+button.input{
+	background:none;
+	color:#aaa;
+}
+
+body{
+	background:url('../img/fondo.jpg');
+}
+
+button.input:hover{
+	background:none;
+	color:#888;
+}
+
+*{ 
+    outline: none;
+}
+
+.login{
+	position:fixed;
+	padding:25px;
+	height:100%;
+	background:rgba(0,0,0,0.8);
+}
+
+@media only screen and (min-width: 700px) {
+}
+@media only screen and (max-width: 701px) {
 }

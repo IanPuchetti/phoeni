@@ -1,62 +1,61 @@
 var express = require('express');
-var app = express();
-var cors = require('cors');
-var path = require('path');
-var mongodb = require('mongodb');
 var session = require('express-session');
-
 var bodyParser = require('body-parser');
-var MongoClient = mongodb.MongoClient;
-var url = 'mongodb://localhost:27017/phoenix';
+var app = express();
 
+app.set('views', __dirname + '/views');
+app.engine('html', require('ejs').renderFile);
 
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({secret: 'ssshhhhh'}));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
+var sess;
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname, 'index.html'));
+app.get('/',function(req,res){
+sess = req.session;
+//Session set when user Request our app via URL
+if(sess.email) {
+/*
+* This line check Session existence.
+* If it existed will do some action.
+*/
+    res.redirect('/admin');
+}
+else {
+    res.render('index.html');
+}
 });
 
-app.post('/find', function (req, res) {
-  //req.body
-  //res.send({});
-  console.log(mongo.find({usuario:req.body.usuario}, 'usuarios'));
-  res.send(mongo.find({usuario:req.body.usuario}, 'usuarios'));
+app.post('/login',function(req,res){
+  sess = req.session;
+//In this we are assigning email to sess.email variable.
+//email comes from HTML page.
+  sess.email=req.body.email;
+  res.end('done');
 });
 
-var server = app.listen(process.env.PORT || 3000, function(){
-  console.log('Server listening on port 3000');
+app.get('/admin',function(req,res){
+  sess = req.session;
+if(sess.email) {
+res.write('<h1>Hello '+sess.email+'</h1>');
+res.end('<a href="+">Logout</a>');
+} else {
+    res.write('<h1>Please login first.</h1>');
+    res.end('<a href="+">Login</a>');
+}
 });
 
-var mongo = {
-                insert: function (a,c){
-                MongoClient.connect(url, function (err, db) {
-                if(err){}else{
-                db.collection(c).insert(a, function (err, result) {
-                if(err){console.log(err);}else{console.log('Inserted.');}
-                });
-                db.close();
-                }
-                });},
+app.get('/logout',function(req,res){
+req.session.destroy(function(err) {
+  if(err) {
+    console.log(err);
+  } else {
+    res.redirect('/');
+  }
+});
 
-              find: function (a,c){
-                var found;
-                MongoClient.connect(url, function (err, db) {
-                if (err) {}else{
-                console.log('Connection established to', url);
-                var collection = db.collection(c);
-                found=collection.find(a).toArray(function (err, result) {
-                if(err){console.log(err);}
-                else if (result.length){console.log(result);return result;}
-                else {console.log('Found nothing.');}
-                db.close();}
-                );
-                return found;
-                }
-                });
-              }
-            };
+});
+app.listen(3000,function(){
+console.log("App Started on PORT 3000");
+});
