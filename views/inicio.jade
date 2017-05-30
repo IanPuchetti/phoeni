@@ -1,0 +1,20 @@
+extends layout
+
+block content
+ body.app
+  header.app.no-select
+   span.dropdown
+      span(data-toggle='dropdown').dropdown-toggle.menu Administración
+      ul.dropdown-menu
+        li.dropdown-submenu
+         a(href='#') Transporte
+         ul.dropdown-menu
+          li: a(tabindex="-1", href="#")  Choferes
+          li: a(tabindex="-1", href="#")  Camiones
+        li: a(href='#') Productos
+   a(href="/logout").menu Salir
+  .side.background-gr
+   span.icon
+   | #{user}
+  script
+   $('.menu').click(function(event){$('.menu').css('border','0px');$(this).css('border-top','5px solid orange');});

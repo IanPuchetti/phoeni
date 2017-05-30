@@ -1,21 +1,19 @@
 {
-  "name": "phoenix",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "dependencies": {
-    "angular-file-upload": "^2.5.0",
-    "body-parser": "^1.17.1",
-    "express": "^4.15.2",
-    "express-session": "^1.15.2",
-    "mongodb": "^2.2.25",
-    "cors": "^2.8.3"
-  },
-  "devDependencies": {},
+  "name": "express",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node ./bin/www"
   },
-  "author": "phoenix-log",
-  "license": "ISC"
+  "dependencies": {
+    "body-parser": "~1.17.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.3",
+    "express": "~4.15.2",
+    "express-session": "^1.15.3",
+    "jade": "~1.11.0",
+    "mongodb": "^2.2.27",
+    "morgan": "~1.8.1",
+    "serve-favicon": "~2.4.2"
+  }
 }

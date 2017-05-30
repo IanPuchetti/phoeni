@@ -1,0 +1,17 @@
+extends layout
+
+block content
+ body.login
+  header.login
+   img(src="/img/logo.png").logo
+   span.color-gr PHOENIX-LOG
+  form(method="post", action="login").login-box
+   .color-gr:	Iniciar sesión
+   .input-group
+    span.input-group-addon: img(src="/img/icon-username.png")
+    input(type="text", name="user", placeholder="Usuario").form-control
+   .input-group
+    span.input-group-addon: img(src="/img/icon-password.png")
+    input(type="password", name="password", placeholder="Contraseña").form-control
+   button(type="submit").form-control.boton Entrar
+   .olvido ¿Olvidó su contraseña?
