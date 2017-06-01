@@ -17,6 +17,14 @@ block content
    span.icon
    | #{user}
   .content
-   img(src="/img/loading.gif", style="width:20px;margin-top:200px;margin-left:450px;")
+   .row(style="width:90%;margin:auto;padding:25px;")
+    .col-md-6
+     .input-group
+      span.input-group-addon.app Patente
+      input(type="text").form-control.app
+    .col-md-6
+     .input-group
+      span.input-group-addon.app Patente
+      input(type="text").form-control.app
   script
    $('.menu').click(function(event){$('.menu').css('border','0px');$(this).css('border-top','5px solid orange');});

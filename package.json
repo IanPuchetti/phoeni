@@ -17,5 +17,18 @@
     "mongodb": "^2.2.27",
     "morgan": "~1.8.1",
     "serve-favicon": "~2.4.2"
-  }
+  },
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IanPuchetti/phoenix.git"
+  },
+  "author": "IanPuchetti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IanPuchetti/phoenix/issues"
+  },
+  "homepage": "https://github.com/IanPuchetti/phoenix#readme",
+  "description": ""
 }
