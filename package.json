@@ -2,7 +2,8 @@
   "name": "phoenix-log",
   "version": "1.0.0",
   "engines": {
-    "node": "7.2.1"
+    "node": "7.2.1",
+    "npm":"4.5.0"
   },
   "scripts": {
     "start": "node ./bin/www"
