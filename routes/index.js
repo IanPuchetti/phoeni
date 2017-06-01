@@ -3,8 +3,8 @@ var router = express.Router();
 var mongodb = require('mongodb');
 var session = require('express-session');
 var MongoClient = mongodb.MongoClient;
-var url = 'mongodb://127.0.0.1:27017/phoenix';
-var uri = 'mongodb://ianpuchetti:5446@cluster0-shard-00-00-5nuxu.mongodb.net:27017,cluster0-shard-00-01-5nuxu.mongodb.net:27017,cluster0-shard-00-02-5nuxu.mongodb.net:27017/phoenix?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin';
+var uri = 'mongodb://127.0.0.1:27017/phoenix';
+var url = 'mongodb://ianpuchetti:5446@cluster0-shard-00-00-5nuxu.mongodb.net:27017,cluster0-shard-00-01-5nuxu.mongodb.net:27017,cluster0-shard-00-02-5nuxu.mongodb.net:27017/phoenix?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin';
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
