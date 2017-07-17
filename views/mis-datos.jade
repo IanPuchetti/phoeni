@@ -1,0 +1,51 @@
+extends layout
+
+block content
+ body.app.no-select(ng-app="app", ng-controller="controller")
+  header.app
+   a(href="/").menu Inicio
+   span.dropdown
+      span(data-toggle='dropdown').dropdown-toggle.menu Administración
+      ul.dropdown-menu
+        li.dropdown-submenu
+         a(href='#') Transporte
+         ul.dropdown-menu
+          li: a(tabindex="-1", href="#")  Choferes
+          li: a(tabindex="-1", href="/camiones")  Camiones
+        li: a(href='#') Productos
+    span.dropdown
+      span(data-toggle='dropdown').dropdown-toggle.menu
+       img(src="/img/configuracion.png",style="width:15px;")
+       |  Configuración
+      ul.dropdown-menu
+        li
+         a(href='/mis-datos')
+          img(src="/img/user.png", style="width:14px;margin-top:-5px;margin-right:5px;")
+          |Mis datos
+   a(href="/logout").menu Salir
+  .side
+   | #{user}
+  .content
+   .box(style="width:325px;") Información de tu cuenta
+    .grupo
+     img(src="/img/user.png")
+     input(type="text",placeholder="Usuario...", ng-model="datos.user",disabled).no-select
+    .grupo
+     img(src="/img/password.png")
+     input(type="password",placeholder="Contraseña...", ng-model="datos.password")
+     img(src="/img/loading.gif", ng-show="modificando")
+     img(src="/img/yes.png", ng-show="modificado")
+    .butn(ng-click="modificar.password()") Cambiar contraseña
+  script.
+   $('.menu').click(function(event){$('.menu').css('border','0px');$(this).css('border-top','5px solid orange');});
+   var app = angular.module('app', []);
+   app.controller('controller', function($http, $scope) {
+   var _=$scope;
+   _.datos={user:"#{user}"};
+   _.refrescar=function(){$http.post('/mis-datos/datos', _.datos).then(function(res){_.datos.password=res.data[0].password;});}
+   _.modificar={
+   password:function(){_.modificando=true;_.modificado=false;$http.post('/mis-datos/modificar/password',_.datos).then(function(res){if(res.data=='ok'){_.refrescar();_.modificando=false;_.modificado=true;}});}
+   };
+   _.refrescar();
+
+   });

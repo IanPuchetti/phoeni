@@ -4,6 +4,11 @@
 }
 
 @font-face {
+    font-family: Product;
+    src: url('/fonts/Product Sans Regular.ttf');
+}
+
+@font-face {
     font-family: Benton-Sans-Light;
     src: url('/fonts/Benton-Sans-Light.ttf');
 }
@@ -87,11 +92,11 @@ body.error img{
 }
 
 body.app{
-	overflow-y:hidden;
+	overflow:hidden;
 }
 
 .app{
-		font-family:Benton-Sans;
+		font-family:Product;
 }
 
 a:hover, a:visited, a:link, a:active
@@ -124,6 +129,8 @@ header.app {
 	padding:17px 14px 7px 99px;
 	border-bottom:1px solid #ddd;
 	border-top:4px solid #f00;
+	background: #fff;
+	width:150%;
 }
 
 .color-gr{
@@ -238,8 +245,9 @@ ul.dropdown-menu li a{
 	height:100%;
 	padding-top:70px;
 	font-size:18px;
-	color:#fff;
+	color:#666;
 	border-right:1px solid #ddd;
+	z-index: -1;
 }
 
 .icon{
@@ -261,6 +269,7 @@ ul.dropdown-menu li a{
 
 .menu{
 	padding:18px 10px 0px 10px;
+
 }
 
 .content{
@@ -273,4 +282,71 @@ ul.dropdown-menu li a{
 	font-size:12px;
 	padding:5px;
 	height:25px;
+}
+.menu img, .dropdown-menu li a img{
+background:#666;
+margin-top:-3px;
+}
+.menu:hover>img, .dropdown-menu li a:hover>img{
+	background: -webkit-linear-gradient(#e11c1c, #d9aa21);
+  	-webkit-background-clip: background;
+  	-webkit-text-fill-color: transparent;
+}
+
+.box{
+	margin:15px;
+	padding:15px;
+	border:1px solid #ddd;
+	border-radius:5px;
+	font-size:15px;
+	color:#666;
+}
+
+.box div{
+	margin:10px;
+}
+
+.box:hover{
+	border-color:#ffd08c;
+}
+
+.grupo{
+	border:1px solid #ddd;
+	border-radius: 5px;
+	color:#666;
+	font-size:18px;
+}
+
+.grupo img, .butn img{
+	width:15px;
+	margin:5px 5px 5px 10px;
+	background: -webkit-linear-gradient(#e11c1c, #d9aa21);
+  	-webkit-background-clip: background;
+  	-webkit-text-fill-color: transparent;
+}
+
+.grupo input {
+	font-size:13px;
+	outline: none;
+	border:0px;
+	padding-left:5px;
+}
+
+.grupo input:disabled {
+	color:#888;
+	background: none;
+}
+
+.butn{
+	margin:10px;
+	padding:5px;
+	border-radius:5px;
+	border:1px solid #ddd;
+	font-size:12px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.butn:hover{
+	border-color:#ffd08c;
 }
