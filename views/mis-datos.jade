@@ -42,9 +42,9 @@ block content
    app.controller('controller', function($http, $scope) {
    var _=$scope;
    _.datos={user:"#{user}"};
-   _.refrescar=function(){$http.post('/mis-datos/datos', _.datos).then(function(res){_.datos.password=res.data[0].password;});}
+   _.refrescar=function(){_.modificando=true;$http.post('/mis-datos/datos', _.datos).then(function(res){_.datos.password=res.data[0].password;_.modificando=false;});}
    _.modificar={
-   password:function(){_.modificando=true;_.modificado=false;$http.post('/mis-datos/modificar/password',_.datos).then(function(res){if(res.data=='ok'){_.refrescar();_.modificando=false;_.modificado=true;}});}
+   password:function(){_.modificando=true;_.modificado=false;$http.post('/mis-datos/modificar/password',_.datos).then(function(res){if(res.data=='ok'){_.modificando=false;_.modificado=true;}});}
    };
    _.refrescar();
 
