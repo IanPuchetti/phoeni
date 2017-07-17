@@ -3,8 +3,9 @@ var router = express.Router();
 var mongodb = require('mongodb');
 var session = require('express-session');
 var MongoClient = mongodb.MongoClient;
-var uri = 'mongodb://192.168.1.5:27017/phoenix';
-var url = 'mongodb://ianpuchetti:5446@cluster0-shard-00-00-5nuxu.mongodb.net:27017,cluster0-shard-00-01-5nuxu.mongodb.net:27017,cluster0-shard-00-02-5nuxu.mongodb.net:27017/phoenix?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin';
+var url = 'mongodb://192.168.1.5:27017/phoenix';
+var uri = 
+'mongodb://ianpuchetti:5446@cluster0-shard-00-00-5nuxu.mongodb.net:27017,cluster0-shard-00-01-5nuxu.mongodb.net:27017,cluster0-shard-00-02-5nuxu.mongodb.net:27017/phoenix?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin';
 
 //INICIO
 router.get('/', function(req, res, next) {
@@ -59,12 +60,26 @@ router.post('/mis-datos/datos', function(req, res, next) {
 });
 
 
+router.post('/mis-datos/agregar/usuario', function(req, res, next) {
+    MongoClient.connect(url, function (err, db) {
+                if(err){}else{
+                db.collection('users').insert(req.body, function (err, result) {
+                if(err){console.log(err);}else{res.send('ok');}
+                });
+                db.close();
+                }
+            });
+});
+
+
+
+
 router.post('/mis-datos/modificar/password', function(req, res, next) {
     MongoClient.connect(url, function (err, db) {
                 if (err) {}else{
                 console.log('connected');
                 var collection = db.collection('users');
-                collection.update({user:req.body.user},{user:req.body.user, password:req.body.password},function (err, result) {
+                collection.update({user:req.body.user},{user:req.body.user, password:req.body.password, mail:req.body.mail},function (err, result) {
                 if(err){res.send('error');}
                 else if (result){res.send('ok');}
                 else {res.send('error');}

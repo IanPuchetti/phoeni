@@ -1,5 +1,4 @@
 extends layout
-
 block content
  body.app.no-select(ng-app="app", ng-controller="controller")
   header.app
@@ -26,25 +25,43 @@ block content
   .side
    | #{user}
   .content
-   .box(style="width:325px;") Información de tu cuenta
+   .box(style="width:325px;display:inline-block") Información de tu cuenta
     .grupo
      img(src="/img/user.png")
      input(type="text",placeholder="Usuario...", ng-model="datos.user",disabled).no-select
+    .grupo
+     span.color-gr(style='margin:10px')  @
+     input(type="text",placeholder="Correo electrónico...", ng-model="datos.mail")
+     img(src="/img/loading.gif", ng-show="modificando")
+     img(src="/img/yes.png", ng-show="modificado")
     .grupo
      img(src="/img/password.png")
      input(type="password",placeholder="Contraseña...", ng-model="datos.password")
      img(src="/img/loading.gif", ng-show="modificando")
      img(src="/img/yes.png", ng-show="modificado")
-    .butn(ng-click="modificar.password()") Cambiar contraseña
+    .butn(ng-click="modificar.password()") Modificar datos
+   .box(style="width:325px;display:inline-block") Agregar usuario
+    .grupo
+     img(src="/img/user.png")
+     input(type="text",placeholder="Usuario...", ng-model="nuevo.user").no-select
+    .grupo
+     img(src="/img/password.png")
+     input(type="password",placeholder="Contraseña...", ng-model="nuevo.password")
+     img(src="/img/loading.gif", ng-show="agregando")
+     img(src="/img/yes.png", ng-show="agregado")
+    .butn(ng-click="agregar.user()") Agregar usuario
   script.
    $('.menu').click(function(event){$('.menu').css('border','0px');$(this).css('border-top','5px solid orange');});
    var app = angular.module('app', []);
    app.controller('controller', function($http, $scope) {
    var _=$scope;
    _.datos={user:"#{user}"};
-   _.refrescar=function(){_.modificando=true;$http.post('/mis-datos/datos', _.datos).then(function(res){_.datos.password=res.data[0].password;_.modificando=false;});}
+   _.refrescar=function(){_.modificando=true;$http.post('/mis-datos/datos', _.datos).then(function(res){_.datos.password=res.data[0].password;_.datos.mail=res.data[0].mail;_.modificando=false;});}
    _.modificar={
    password:function(){_.modificando=true;_.modificado=false;$http.post('/mis-datos/modificar/password',_.datos).then(function(res){if(res.data=='ok'){_.modificando=false;_.modificado=true;}});}
+   };
+   _.agregar={
+   user:function(){_.agregando=true;_.agregado=false;if(_.nuevo.user && _.nuevo.password){$http.post('/mis-datos/agregar/usuario',_.nuevo).then(function(res){if(res.data=='ok'){_.agregando=false;_.agregado=true;}});}}
    };
    _.refrescar();
 
