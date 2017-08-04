@@ -1,0 +1,69 @@
+extends menu
+block content
+  .side
+   .selector(ng-click="selector='paises'")  Países
+   .selector(ng-click="selector='provincias'")  Provincias
+   .selector(ng-click="selector='ciudades'")  Ciudades
+   .selector(ng-click="selector='paises'")  Divisas
+  .content
+   .box(style="display:inline-block;width:300px;", ng-show="selector=='paises'") Países 
+    .grupo
+     img(src="/img/world.png")
+     input(type="text",placeholder="País...", ng-model="nuevo.pais").no-select
+     span.color-gr(ng-click="agregar.pais()", style="font-size:18px;cursor:pointer;") +
+    .display
+     div(ng-repeat="pais in paises | orderBy:'pais'  | filter: nuevo.pais")
+      input(type="text", ng-model="pais.n_pais", ng-init="pais.n_pais=pais.pais").input
+      img(src="/img/write.png", ng-click="modificar.pais(pais._id, pais.n_pais)").icono
+      img(src="/img/borrar.png", ng-click="borrar.pais(pais.pais)").icono
+   .box(style="display:inline-block;width:300px;", ng-show="selector=='provincias'") Provincias 
+    .grupo
+     img(src="/img/world.png")
+     input(type="text",placeholder="País...", ng-init="provincia={}", ng-model="provincia.pais", ng-focus="focus='paises'", ng-blur="unfocus()").no-select
+     .options(ng-show="focus=='paises'")
+      .option(ng-repeat="pais in paises| orderBy:'pais'  | filter: provincia.pais", ng-click="provincia.pais=pais.pais;traer.provincias(pais.pais)") {{pais.pais}}
+    .grupo
+     img(src="/img/world.png")
+     input(type="text",placeholder="Provincia...", ng-model="nuevo.provincia").no-select
+     span.color-gr(ng-click="agregar.provincia()", style="font-size:18px;cursor:pointer;") +
+    .display
+     div(ng-repeat="provincia in provincias | orderBy:'provincia'  | filter: nuevo.provincia")
+      input(type="text", ng-model="provincia.n_provincia", ng-init="provincia.n_provincia=provincia.provincia").input
+      img(src="/img/write.png", ng-click="modificar.provincia(provincia._id, provincia.n_provincia)").icono
+      img(src="/img/borrar.png", ng-click="borrar.provincia(provincia._id)").icono
+   .box(style="display:inline-block;width:300px;", ng-show="selector=='ciudades'") Ciudades 
+    .grupo
+     img(src="/img/world.png")
+     input(type="text",placeholder="País...", ng-init="ciudad={}", ng-model="ciudad.pais", ng-focus="focus='paises'", ng-blur="unfocus()").no-select
+     .options(ng-show="focus=='paises'")
+      .option(ng-repeat="pais in paises| orderBy:'pais'  | filter: provincia.pais", ng-click="provincia.pais=pais.pais;traer.provincias(pais.pais)") {{pais.pais}}
+    .grupo
+     img(src="/img/world.png")
+     input(type="text",placeholder="Provincia...", ng-model="nuevo.provincia").no-select
+     span.color-gr(ng-click="agregar.provincia()", style="font-size:18px;cursor:pointer;") +
+    .display
+     div(ng-repeat="provincia in provincias | orderBy:'provincia'  | filter: nuevo.provincia")
+      input(type="text", ng-model="provincia.n_provincia", ng-init="provincia.n_provincia=provincia.provincia").input
+      img(src="/img/write.png", ng-click="modificar.provincia(provincia._id, provincia.n_provincia)").icono
+      img(src="/img/borrar.png", ng-click="borrar.provincia(provincia._id)").icono
+  script.
+   $('.menu').click(function(event){$('.menu').css('border','0px');$(this).css('border-top','5px solid orange');});
+   var app = angular.module('app', []);
+   app.controller('controller', function($http, $scope, $timeout) {
+   var _=$scope;
+   _.refrescar=function(){_.modificando=true;$http.post('/parametros/datos', {collection:'paises',query:{}}).then(function(res){_.paises=res.data;_.modificando=false;});};
+   _.traer={provincias:function(p){$http.post('/parametros/datos', {collection:'provincias',query:{pais:p}}).then(function(res){_.provincias=res.data})}};
+   _.modificar={pais:function(id, pais_n){$http.post('/parametros/modificar/paises',{_id:id, pais_n:pais_n}).then(function(res){_.refrescar();});},
+   provincia:function(id, provincia_n){$http.post('/parametros/modificar/provincias',{_id:id, provincia:provincia_n}).then(function(res){console.log(res);_.traer.provincias(_.provincia.pais);});},
+   };
+   _.borrar={
+   pais:function(pais){$http.post('/parametros/borrar/paises',{pais:pais}).then(function(res){_.refrescar();});}
+   };
+   _.agregar={
+   pais:function(){_.agregando=true;_.agregado=false;if(_.nuevo.pais){$http.post('/parametros/agregar/paises',_.nuevo).then(function(res){if(res.data=='ok'){_.agregando=false;_.agregado=true;_.refrescar();_.nuevo.pais='';}});}},
+   provincia:function(){_.agregando=true;_.agregado=false;if(_.nuevo.provincia){$http.post('/parametros/agregar/provincias',{pais:_.provincia.pais,provincia:_.nuevo.provincia}).then(function(res){if(res.data=='ok'){_.agregando=false;_.agregado=true;_.traer.provincias(_.provincia.pais);_.nuevo.provincia='';}});}}
+   };
+   _.unfocus=function(){$timeout(function(){_.focus='';}, 100);};
+   _.refrescar();
+
+   });

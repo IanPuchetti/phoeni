@@ -1,0 +1,25 @@
+extends layout
+
+block menu
+ body.app.no-select
+  header.app
+     a(href="/").menu Inicio
+     span.dropdown
+        span(data-toggle='dropdown').dropdown-toggle.menu Administración
+        ul.dropdown-menu
+          li.dropdown-submenu
+           a(href='#') Transporte
+           ul.dropdown-menu
+            li: a(tabindex="-1", href="#")  Choferes
+            li: a(tabindex="-1", href="/camiones")  Camiones
+          li: a(href='#') Productos
+      span.dropdown
+        span(data-toggle='dropdown').dropdown-toggle.menu
+         img(src="/img/configuracion.png",style="width:15px;")
+         |  Configuración
+        ul.dropdown-menu
+          li
+           a(href='/mis-datos')
+            img(src="/img/user.png", style="width:14px;margin-top:-5px;margin-right:5px;")
+            |Mis datos
+     a(href="/logout").menu Salir
