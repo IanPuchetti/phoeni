@@ -485,3 +485,15 @@ img.icono:hover{
 ::-ms-input-placeholder { /* Microsoft Edge */
    color:    #aaa;
 }
+
+.lista{
+	color:#aaa;
+	cursor:pointer;
+	margin:3px;
+}
+
+.lista:hover{
+	background: -webkit-linear-gradient(#f20000, #f1c100);
+  	-webkit-background-clip: text;
+  	-webkit-text-fill-color: transparent;
+}

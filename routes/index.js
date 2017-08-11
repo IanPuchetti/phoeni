@@ -90,9 +90,10 @@ router.post('/bases/choferes/modificar', function(req, res, next) {
                 if (err) {}else{
                 console.log('connected');
                 var _id = new mongodb.ObjectID(req.body._id);
+                delete req.body._id;
                 var collection = db.collection('choferes');
                 collection.update({_id:_id},{$set:req.body},function (err, result) {
-                if(err){res.send('error');}
+                if(err){res.send(err);}
                 else if (result){res.send('ok');}
                 else {res.send('error');}
                 db.close();}
