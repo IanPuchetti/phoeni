@@ -1,30 +1,76 @@
-extends layout
+extends menu
 
 block content
- body.app
-  header.app.no-select
-   a(href="/").menu Inicio
-   span.dropdown
-      span(data-toggle='dropdown').dropdown-toggle.menu Administración
-      ul.dropdown-menu
-        li.dropdown-submenu
-         a(href='#') Transporte
-         ul.dropdown-menu
-          li: a(tabindex="-1", href="#")  Choferes
-          li: a(tabindex="-1", href="/camiones")  Camiones
-        li: a(href='#') Productos
-   a(href="/logout").menu Salir
-  .side
-   | #{user}
-  .content
-   .row(style="width:90%;margin:auto;padding:25px;")
-    .col-md-6
-     .input-group
-      span.input-group-addon.app Patente
-      input(type="text").form-control.app
-    .col-md-6
-     .input-group
-      span.input-group-addon.app Patente
-      input(type="text").form-control.app
-  script
+  .box(style="width:450px;display:inline-block;")
+   .icono(style="vertical-align:top;margin:20px;margin-right:0px;margin-left:40px;", onclick="$('#file').click()")
+    img(src="/img/camara.png", style="width:45px;height:45px;margin-left:27px;margin-top:27px;", ng-hide="file").icono
+    img(src="{{file}}" style="width:98px;height:98px;border-radius:50%;display:none;", onload="$(this).css('display','inline-block')", ng-show="file")
+   input(type="file", fileread="file", filetype="filetype", style="display:none;", id="file")
+
+   .inline
+    .grupo
+     img(src="/img/user.png")
+     input(placeholder="Nombre y apellido...")
+    .grupo
+     img(src="/img/id-card.png")
+     input(placeholder="Numero documento...")
+     hr(style="margin:0px;")
+     input(placeholder="Tipo documento...", style="margin-left:30px;")
+   .inline(style="margin-top:-20px;width:395px;")
+    .grupo(style="")
+     img(src="/img/reporte.png")
+     input(placeholder="Descripcion...")
+    .grupo(style="")
+     img(src="/img/empresa.png")
+     input(placeholder="Transportista...")
+    .grupo
+     img(src="/img/home.png")
+     input(placeholder="Dirección 1...")
+     hr(style="margin:0px;")
+     input(placeholder="Dirección 2...", style="margin-left:30px;")
+    .grupo.butn(ng-click="resize()")  Agregar
+     img(src="/img/loading.gif", ng-show="agregando")
+     img(src="/img/yes.png", ng-show="agregado")
+  script(src="/js/compress.js")
+  script.
+   $("#upload").click(function(){$("#photo").click();});
    $('.menu').click(function(event){$('.menu').css('border','0px');$(this).css('border-top','5px solid orange');});
+   angular
+   .module("app",[])
+   .directive("fileread", [function () {
+    return {
+        scope: {
+            fileread: "=",
+            filetype: "="
+        },
+        link: function (scope, element, attributes) {
+            element.bind("change", function (changeEvent) {
+                var reader = new FileReader(), filetype;
+                reader.onload = function (loadEvent) {
+                    scope.$apply(function () {
+                        scope.fileread = loadEvent.target.result;
+                        scope.filetype = filetype;
+                    });
+                }
+                filetype=changeEvent.target.files[0].name.substr(changeEvent.target.files[0].name.length - 3);
+                reader=reader.readAsDataURL(changeEvent.target.files[0]);
+            });
+        }
+    }
+    }])
+    .controller("controller", function ($scope, $http) {
+        $scope.agregar=function(){
+        $scope.agregando=true;$scope.agregado=false;
+        $scope.chofer.foto=LZString.compress(resizeImage($scope.file,100,100));
+        $http.post('/bases/choferes/agregar/',chofer).then(function(res){if(res.data=='ok'){$scope.agregando=false;$scope.agregado=true;}});}
+    });
+
+    function resizeImage(img, width, height) {
+    var image = new Image;
+    image.src = img;
+    var canvas = document.createElement('canvas'), ctx = canvas.getContext('2d');
+    canvas.width = width;
+    canvas.height = height;
+    ctx.drawImage(image, 0, 0, width, height);
+    return canvas.toDataURL('image/jpeg',0.95);
+    }

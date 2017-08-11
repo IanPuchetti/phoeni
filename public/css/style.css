@@ -302,6 +302,23 @@ margin-top:-3px;
   	-webkit-text-fill-color: transparent;
 }
 
+div.icono{
+display:inline-block;
+margin:20px;
+cursor:pointer;
+width:100px;height:100px;border:1px solid #aaa;border-radius:50%;
+}
+div.icono:hover{
+    border-style: solid;
+    border-color:#d97c20;
+}
+
+div.icono:hover > img{
+	background: -webkit-linear-gradient(#e11c1c, #d9aa21);
+  	-webkit-background-clip: background;
+  	-webkit-text-fill-color: transparent;
+}
+
 img.icono{
 cursor:pointer;
 width:15px;
@@ -430,8 +447,6 @@ img.icono:hover{
 .options{
 	position:absolute;
 	width:248px;
-	top:76px;
-	left:31px;
 	font-size:11px;
 	max-height:200px;
 	overflow-x:hidden;
@@ -446,4 +461,26 @@ img.icono:hover{
 .option:hover{
 	text-decoration: underline;
 
+}
+
+.inline{
+	display:inline-block;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #aaa;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #aaa;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #aaa;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #aaa;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color:    #aaa;
 }

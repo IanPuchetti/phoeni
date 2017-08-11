@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 });
 
 //CAMIONES
-router.get('/camiones', function(req, res, next) {
+router.get('/bases/camiones', function(req, res, next) {
   if(req.session.user){
     res.render('camiones', { title: 'Phoenix-Log' , user: req.session.user, menu:'general'});
   }else{
@@ -26,9 +26,27 @@ router.get('/camiones', function(req, res, next) {
 
 
 //CHOFERES
-router.get('/choferes', function(req, res, next) {
+router.get('/bases/choferes', function(req, res, next) {
   if(req.session.user){
     res.render('choferes', { title: 'Phoenix-Log' , user: req.session.user, menu:'general'});
+  }else{
+    res.render('index', { title: 'Phoenix-Log' });
+}
+});
+
+//ACOPLADOS
+router.get('/bases/acoplados', function(req, res, next) {
+  if(req.session.user){
+    res.render('acoplados', { title: 'Phoenix-Log' , user: req.session.user, menu:'general'});
+  }else{
+    res.render('index', { title: 'Phoenix-Log' });
+}
+});
+
+//DEPOSITOS
+router.get('/bases/depositos', function(req, res, next) {
+  if(req.session.user){
+    res.render('depositos', { title: 'Phoenix-Log' , user: req.session.user, menu:'general'});
   }else{
     res.render('index', { title: 'Phoenix-Log' });
 }
