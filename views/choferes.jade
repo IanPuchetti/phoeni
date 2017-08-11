@@ -1,7 +1,7 @@
 extends menu
 
 block content
-  .box(style="width:800px;display:inline-block;padding-top:5px;margin-left:150px;", ng-init="chofer={}")
+  .box(style="width:800px;display:inline-block;padding-top:5px;margin-left:150px;", ng-init="chofer={};ver='nuevo'")
    .inline(style="width:450px;")
     .icono(style="vertical-align:top;margin:20px;margin-right:0px;margin-left:40px;", onclick="$('#file').click()")
      img(src="/img/camara.png", style="width:45px;height:45px;margin-left:27px;margin-top:27px;", ng-hide="chofer.foto").icono

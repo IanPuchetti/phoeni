@@ -12,8 +12,14 @@ block menu
           li.dropdown-submenu
            a(href='#') Transporte
            ul.dropdown-menu
-            li: a(tabindex="-1", href="/bases/choferes")  Choferes
-            li: a(tabindex="-1", href="/bases/camiones")  Camiones
+            li
+             a(href='/bases/choferes')
+              img(src="/img/chofer.png", style="width:14px;margin-top:-5px;margin-right:5px;")
+              |Choferes
+            li
+             a(href='/bases/camiones')
+              img(src="/img/camion.png", style="width:14px;margin-top:-5px;margin-right:5px;")
+              |Camiones
             li: a(tabindex="-1", href="/bases/acoplados")  Acoplados
           li: a(href='/bases/depositos') Depositos
      span.dropdown

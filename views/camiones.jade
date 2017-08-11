@@ -1,9 +1,84 @@
 extends menu
 
 block content
-  .side
-   | #{user}
-  .content
-   img(src="/img/loading.gif", style="width:20px;margin-top:200px;margin-left:450px;")
-  script
+  .box(style="width:800px;display:inline-block;padding-top:5px;margin-left:150px;", ng-init="camion={}")
+   .inline(style="width:450px;")
+    .inline
+     .grupo
+      img(src="/img/id-card.png")
+      input(placeholder="Patente...", ng-model="camion.patente")
+      hr(style="margin:0px;")
+      input(placeholder="Año...", ng-model="camion.anio", style="margin-left:30px;")
+     .grupo(style="")
+      img(src="/img/reporte.png")
+      input(placeholder="Descripcion...", ng-model="camion.descripcion")
+     .grupo 
+      img(src="/img/empresa.png")
+      input(placeholder="Transportista...", ng-model="camion.transportista")
+      hr(style="margin:0px")
+      img(src="/img/chofer.png")
+      input(placeholder="Chofer...", ng-model="camion.chofer")
+      hr(style="margin:0px")
+      input(placeholder="Tipo...",style="margin-left:30px;" ng-model="camion.chofer")
+     .grupo 
+      img(src="/img/empresa.png")
+      input(ng-model="camion.transportista")
+      hr(style="margin:0px")
+      img(src="/img/chofer.png")
+      input(type="checkbox", ng-model="camion.chofer")
+
+     .grupo
+      img(src="/img/home.png")
+      input(placeholder="Dirección 1...", ng-model="camion.direccion1")
+      hr(style="margin:0px;")
+      input(placeholder="Dirección 2...", style="margin-left:30px;", ng-model="camion.direccion2")
+     .grupo
+      img(src="/img/world.png")
+      input(placeholder="País...", style="width:100px;", ng-model="camion.pais")
+      input(placeholder="Provincia...", style="margin-left:30px;", ng-model="camion.provincia")
+      hr(style="margin:0px;")
+      input(placeholder="Ciudad...",  style="width:100px;margin-left:30px;", ng-model="camion.ciudad")
+      input(placeholder="Código postal...", style="margin-left:30px;", ng-model="camion.codigo_postal")
+     .grupo.butn(ng-click="agregar()", ng-show="ver=='nuevo'")  Agregar
+      img(src="/img/loading.gif", ng-show="agregando")
+      img(src="/img/yes.png", ng-show="agregado")
+     .grupo.butn(ng-click="modificar()", ng-show="ver=='modificar'")  Modificar
+      img(src="/img/loading.gif", ng-show="modificando")
+      img(src="/img/yes.png", ng-show="modificado")
+   .inline(style="width:300px;margin-left:-50px;vertical-align:top;margin-top:20px;")
+    .grupo
+     img(src="/img/telefono.png")
+     input(placeholder="Teléfono fijo...", style="width:100px;", ng-model="camion.telefonos.fijo", ng-init="camion.telefonos={}")
+     hr(style="margin:0px;")
+     input(placeholder="Teléfono celular...", style="margin-left:30px;", ng-model="camion.telefonos.celular")
+     hr(style="margin:0px;")
+     input(placeholder="Radio...",  style="width:100px;margin-left:30px;", ng-model="camion.telefonos.radio")
+    .grupo
+     span.color-gr(style="margin-left:10px;")  @
+     input(placeholder="Correo electrónico...", ng-model="camion.email")
+    .grupo
+     img(src="/img/agenda.png")
+     span(style="font-size:12px;color:#888;") Vencimiento de registro:
+     input(type="date", style="width:100px;font-size:10px;", ng-model="camion.registro.vencimiento", ng-init="camion.registro={}")
+     hr(style="margin:0px;")
+     span(style="font-size:12px;color:#888;margin-left:30px;") Examen médico:
+     input(type="date", style="width:100px;font-size:10px;", ng-model="camion.examen_medico")
+  .side(style="z-index:1;")
+   div    Camiones
+   .grupo.butn(ng-click="ver='nuevo';camion={telefonos:{},documento:{},registro:{}};")    Nuevo
+  script.
    $('.menu').click(function(event){$('.menu').css('border','0px');$(this).css('border-top','5px solid orange');});
+   angular
+   .module("app",[])
+   .controller("controller", function ($scope, $http) {
+        $scope.agregar=function(){
+        $scope.agregando=true;$scope.agregado=false;
+        if($scope.camion.foto){$scope.camion.foto=resizeImage($scope.camion.foto,100,100);}
+        $http.post('/bases/camiones/agregar/',$scope.camion).then(function(res){if(res.data=='ok'){$scope.agregando=false;$scope.agregado=true;$scope.camion.foto=$scope.camion.foto;}});};
+        $scope.modificar=function(){
+        $scope.modificando=true;$scope.modificado=false;
+        if($scope.camion.foto){$scope.camion.foto=resizeImage($scope.camion.foto,100,100);}
+        $http.post('/bases/camiones/modificar/',$scope.camion).then(function(res){console.log(res.data);if(res.data=='ok'){$scope.modificando=false;$scope.modificado=true;}});};
+        $http.post('/bases/query',{collection:'camiones',query:{},project:{foto:0}}).then(function(res){$scope.camiones=res.data;});
+        $scope.traer=function(d){$scope.ver='modificar';$http.post('/bases/query',{collection:'camiones',query:{documento:d},project:{}}).then(function(res){$scope.camion=res.data[0];console.log($scope.camion);});};
+    });
