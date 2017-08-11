@@ -1,36 +1,73 @@
 extends menu
 
 block content
-  .box(style="width:450px;display:inline-block;")
-   .icono(style="vertical-align:top;margin:20px;margin-right:0px;margin-left:40px;", onclick="$('#file').click()")
-    img(src="/img/camara.png", style="width:45px;height:45px;margin-left:27px;margin-top:27px;", ng-hide="file").icono
-    img(src="{{file}}" style="width:98px;height:98px;border-radius:50%;display:none;", onload="$(this).css('display','inline-block')", ng-show="file")
-   input(type="file", fileread="file", filetype="filetype", style="display:none;", id="file")
-
-   .inline
+  .box(style="width:800px;display:inline-block;padding-top:5px;margin-left:150px;", ng-init="chofer={}")
+   .inline(style="width:450px;")
+    .icono(style="vertical-align:top;margin:20px;margin-right:0px;margin-left:40px;", onclick="$('#file').click()")
+     img(src="/img/camara.png", style="width:45px;height:45px;margin-left:27px;margin-top:27px;", ng-hide="chofer.foto").icono
+     img(src="{{chofer.foto}}" style="width:98px;height:98px;border-radius:50%;display:none;", onload="$(this).css('display','inline-block')", ng-show="chofer.foto")
+    input(type="file", fileread="chofer.foto", filetype="filetype", style="display:none;", id="file")
+    .inline
+     .grupo
+      img(src="/img/user.png")
+      input(placeholder="Nombre y apellido...", ng-model="chofer.nombre")
+     .grupo
+      img(src="/img/id-card.png")
+      input(placeholder="Numero documento...", ng-model="chofer.documento.numero")
+      hr(style="margin:0px;")
+      input(placeholder="Tipo documento...", style="margin-left:30px;", ng-model="chofer.documento.tipo")
+    .inline(style="margin-top:-20px;width:395px;")
+     .grupo(style="")
+      img(src="/img/reporte.png")
+      input(placeholder="Descripcion...", ng-model="chofer.descripcion")
+      hr(style="margin:0px;")
+      img(src="/img/empresa.png")
+      input(placeholder="Transportista...", ng-model="chofer.transportista")
+     .grupo
+      img(src="/img/home.png")
+      input(placeholder="Dirección 1...", ng-model="chofer.direccion1")
+      hr(style="margin:0px;")
+      input(placeholder="Dirección 2...", style="margin-left:30px;", ng-model="chofer.direccion2")
+     .grupo
+      img(src="/img/world.png")
+      input(placeholder="País...", style="width:100px;", ng-model="chofer.pais")
+      input(placeholder="Provincia...", style="margin-left:30px;", ng-model="chofer.provincia")
+      hr(style="margin:0px;")
+      input(placeholder="Ciudad...",  style="width:100px;margin-left:30px;", ng-model="chofer.ciudad")
+      input(placeholder="Código postal...", style="margin-left:30px;", ng-model="chofer.codigo_postal")
+     .grupo.butn(ng-click="agregar()")  Agregar
+      img(src="/img/loading.gif", ng-show="agregando")
+      img(src="/img/yes.png", ng-show="agregado")
+   .inline(style="width:300px;margin-left:-50px;vertical-align:top;margin-top:20px;")
     .grupo
-     img(src="/img/user.png")
-     input(placeholder="Nombre y apellido...")
-    .grupo
-     img(src="/img/id-card.png")
-     input(placeholder="Numero documento...")
+     img(src="/img/telefono.png")
+     input(placeholder="Teléfono fijo...", style="width:100px;", ng-model="chofer.telefonos.fijo", ng-init="chofer.telefonos={}")
      hr(style="margin:0px;")
-     input(placeholder="Tipo documento...", style="margin-left:30px;")
-   .inline(style="margin-top:-20px;width:395px;")
-    .grupo(style="")
-     img(src="/img/reporte.png")
-     input(placeholder="Descripcion...")
-    .grupo(style="")
-     img(src="/img/empresa.png")
-     input(placeholder="Transportista...")
-    .grupo
-     img(src="/img/home.png")
-     input(placeholder="Dirección 1...")
+     input(placeholder="Teléfono celular...", style="margin-left:30px;", ng-model="chofer.telefonos.celular")
      hr(style="margin:0px;")
-     input(placeholder="Dirección 2...", style="margin-left:30px;")
-    .grupo.butn(ng-click="resize()")  Agregar
-     img(src="/img/loading.gif", ng-show="agregando")
-     img(src="/img/yes.png", ng-show="agregado")
+     input(placeholder="Radio...",  style="width:100px;margin-left:30px;", ng-model="chofer.telefonos.radio")
+    .grupo
+     span.color-gr(style="margin-left:10px;")  @
+     input(placeholder="Correo electrónico...", ng-model="chofer.email")
+    .grupo
+     img(src="/img/agenda.png")
+     span(style="font-size:12px;color:#888;") Vencimiento de registro:
+     input(type="date", style="width:100px;font-size:10px;", ng-model="chofer.registro.vencimiento", ng-init="chofer.registro={}")
+     hr(style="margin:0px;")
+     span(style="font-size:12px;color:#888;margin-left:30px;") Examen médico:
+     input(type="date", style="width:100px;font-size:10px;", ng-model="chofer.examen_medico")
+  .side(style="z-index:1;")
+   div    Choferes
+   .grupo.butn(ng-click="ver='nuevo'")    Nuevo
+   .grupo.butn(class="dropdown")
+    span(class="dropdown-toggle", data-toggle="dropdown")    Modificar
+    ul(class="dropdown-menu", style="margin-top:0px;") 
+     .grupo
+      img(src="/img/world.png")
+      input(type="text",placeholder="Provincia...", ng-model="search").no-select
+     .display
+      div(ng-repeat="chofer in choferes | orderBy:'nombre'  | filter: {nombre:search}")
+       div(ng-click="traer(chofer.documento)") {{chofer.nombre}}
   script(src="/js/compress.js")
   script.
    $("#upload").click(function(){$("#photo").click();});
@@ -61,10 +98,12 @@ block content
     .controller("controller", function ($scope, $http) {
         $scope.agregar=function(){
         $scope.agregando=true;$scope.agregado=false;
-        $scope.chofer.foto=LZString.compress(resizeImage($scope.file,100,100));
-        $http.post('/bases/choferes/agregar/',chofer).then(function(res){if(res.data=='ok'){$scope.agregando=false;$scope.agregado=true;}});}
+        $scope.chofer.foto=resizeImage($scope.chofer.foto,100,100);
+        $http.post('/bases/choferes/agregar/',$scope.chofer).then(function(res){if(res.data=='ok'){$scope.agregando=false;$scope.agregado=true;$scope.chofer.foto=$scope.chofer.foto;}});};
+        $http.post('/bases/query',{collection:'choferes',query:{},project:{nombre:1,documento:1}}).then(function(res){$scope.choferes=res.data;});
+        $scope.traer=function(d){ $http.post('/bases/query',{collection:'choferes',query:{documento:d},project:{}}).then(function(res){$scope.chofer=res.data[0];console.log($scope.chofer);});};
     });
-
+    $(".dropdown-menu").click(function(e){e.stopPropagation();});
     function resizeImage(img, width, height) {
     var image = new Image;
     image.src = img;

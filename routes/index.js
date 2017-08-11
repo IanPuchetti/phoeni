@@ -25,6 +25,23 @@ router.get('/bases/camiones', function(req, res, next) {
 });
 
 
+//BASES
+
+router.post('/bases/query', function(req, res, next) {
+    MongoClient.connect(url, function (err, db) {
+                if (err) {}else{
+                console.log('connected');
+                var collection = db.collection(req.body.collection);
+                collection.find(req.body.query).project(req.body.project).toArray(function (err, result) {
+                if(err){console.log(err);}
+                else if (result.length){res.send(result);}
+                else {console.log('nothing');res.send(result);}
+                db.close();}
+                );
+                }
+                });
+});
+
 //CHOFERES
 router.get('/bases/choferes', function(req, res, next) {
   if(req.session.user){
@@ -32,6 +49,56 @@ router.get('/bases/choferes', function(req, res, next) {
   }else{
     res.render('index', { title: 'Phoenix-Log' });
 }
+});
+
+
+
+
+
+router.post('/bases/choferes/agregar', function(req, res, next) {
+    MongoClient.connect(url, function (err, db) {
+                if(err){}else{
+                db.collection('choferes').find(req.body).toArray(function (err, result) {
+                if(err){console.log(err);}
+                else if (result.length){res.send('repetido');}
+                else {
+                    db.collection('choferes').insert(req.body, function (err, result) {
+                if(err){console.log(err);}else{res.send('ok');}
+                });
+                db.close();
+                }
+            });
+            }});
+});
+
+router.post('/bases/choferes/borrar', function(req, res, next) {
+    MongoClient.connect(url, function (err, db) {
+                if(err){}else{
+                 db.collection('choferes').remove(req.body, function (err, result) {
+                if(err){console.log(err);}else{res.send('ok');}
+                });
+                db.close();
+                }
+            });
+            });
+
+
+
+
+router.post('/bases/choferes/modificar', function(req, res, next) {
+    MongoClient.connect(url, function (err, db) {
+                if (err) {}else{
+                console.log('connected');
+                var _id = new mongodb.ObjectID(req.body._id);
+                var collection = db.collection('choferes');
+                collection.update({_id:_id},{$set:req.body},function (err, result) {
+                if(err){res.send('error');}
+                else if (result){res.send('ok');}
+                else {res.send('error');}
+                db.close();}
+                );
+                }
+                });
 });
 
 //ACOPLADOS

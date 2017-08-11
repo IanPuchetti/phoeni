@@ -131,6 +131,7 @@ header.app {
 	border-top:4px solid #f00;
 	background: #fff;
 	width:200%;
+	z-index:5;
 }
 
 .color-gr{
